@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
+import CategoriesList from './CategoriesList';
 
 class PostsList extends Component{
 
   render(){
-    const { posts } = this.props;
-
+    const { posts } = this.props
     return (
       <div>
+      <CategoriesList>
+      </CategoriesList>
       {
-        posts.lenght > 0
-        && posts.posts.map((post) => {
+        posts && posts.map((post) => {
           return(
             <p>{post.id}</p>
           )
@@ -25,7 +26,7 @@ class PostsList extends Component{
 
 function mapStateToProps({ posts }) {
   return {
-    posts: posts,
+    posts: posts
   }
 }
 

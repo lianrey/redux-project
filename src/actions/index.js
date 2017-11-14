@@ -18,3 +18,9 @@ export const fetchPostsWithRedux = () => dispatch => (
     .getAllPosts()
     .then((data) => dispatch(getPosts(data)))
 );
+
+export const fetchCategoriesWithRedux = () => dispatch => (
+  ReadableAPI
+    .getAllCategories()
+    .then((data) => dispatch(getCategories(data)))
+);
