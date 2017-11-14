@@ -16,6 +16,14 @@ function posts(state = {}, action) {
   }
 }
 
+function categories(state = {}, action) {
+  switch(action.type) {
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
-  posts
+  posts,
+  categories
 })
