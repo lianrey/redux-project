@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import CategoriesList from './CategoriesList';
+import { Panel } from 'react-bootstrap';
 
 class PostsList extends Component{
 
@@ -14,7 +15,10 @@ class PostsList extends Component{
       {
         posts && posts.map((post) => {
           return(
-            <p>{post.id}</p>
+            <Panel key={post.id} header={post.title} bsStyle="primary">
+              <p>{post.body}</p>
+              <p>{post.author}</p>
+            </Panel>
           )
         })
       }

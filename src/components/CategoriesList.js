@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
+import { Nav, NavItem } from 'react-bootstrap';
 
 class CategoriesList extends Component{
 
@@ -8,13 +9,16 @@ class CategoriesList extends Component{
     const { categories } = this.props
     return (
       <div>
-      {
-        categories && categories.map((category) => {
-          return(
-            <p>{category.name}</p>
-          )
-        })
-      }
+      <Nav bsStyle="pills">
+        {
+          categories && categories.map((category) => {
+            return(
+              <NavItem key={category.name}>{category.name}
+              </NavItem>
+            )
+          })
+        }
+      </Nav>
       </div>
     )
   }
