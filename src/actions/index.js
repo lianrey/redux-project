@@ -2,6 +2,7 @@ import * as ReadableAPI from '../ReadableAPI';
 
 export const GET_POSTS = 'GET_POSTS';
 export const GET_CATEGORIES = 'GET_CATEGORIES'
+export const GET_SELECTIONS = 'GET_SELECTIONS'
 
 export const getPosts = posts => ({
   type: GET_POSTS,
@@ -13,9 +14,14 @@ export const getCategories = categories => ({
   categories
 })
 
-export const fetchPostsWithRedux = () => dispatch => (
+export const setSelection = ({ category }) => ({
+  type: GET_SELECTIONS,
+  category
+})
+
+export const fetchPostsWithRedux = (byCategory, sortType) => dispatch => (
   ReadableAPI
-    .getAllPosts()
+    .getAllPosts(byCategory, sortType)
     .then((data) => dispatch(getPosts(data)))
 );
 

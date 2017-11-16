@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
 import { connect } from 'react-redux';
 import { fetchPostsWithRedux, fetchCategoriesWithRedux } from '../actions';
 import PostsList from './PostsList';
 import { Route } from 'react-router-dom';
+import CategoriesList from './CategoriesList';
 
 class App extends Component {
   componentDidMount() {
@@ -15,11 +15,17 @@ class App extends Component {
     return (
       <div className="App">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
-        <h1>Categories</h1>
-        <Route exact path="/" render={({ history } ) => (
-          <PostsList>
-          </PostsList>
-        )} />
+        <div className="container">
+          <h1>Readable</h1>
+          <Route exact path="/" render={({ history } ) => (
+            <div>
+              <CategoriesList>
+              </CategoriesList>
+              <PostsList>
+              </PostsList>
+            </div>
+          )} />
+        </div>
       </div>
     );
   }
@@ -34,7 +40,7 @@ const mapStateToProps = ({ posts, categories }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchPostsWithRedux: () => dispatch(fetchPostsWithRedux()),
+    fetchPostsWithRedux: (byCategory) => dispatch(fetchPostsWithRedux(byCategory)),
     fetchCategoriesWithRedux: () => dispatch(fetchCategoriesWithRedux())
   }
 }

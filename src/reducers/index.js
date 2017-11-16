@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_POSTS, GET_CATEGORIES } from '../actions';
+import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS } from '../actions';
 import * as ReadableAPI from '../ReadableAPI';
 
 function posts(state = [], action) {
@@ -24,7 +24,19 @@ function categories(state = [], action) {
   }
 }
 
+function selection(state = {}, action) {
+  const { category } = action
+
+  switch(action.type) {
+    case GET_SELECTIONS:
+      return {...state, category};
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   posts,
-  categories
+  categories,
+  selection
 })
