@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types'
 import { Nav, NavItem } from 'react-bootstrap';
 import { setSelection, fetchPostsWithRedux } from '../actions';
+import { LinkContainer } from 'react-router-bootstrap';
+import { withRouter } from 'react-router-dom'
 
 class CategoriesList extends Component{
   selectCategory = (name) => {
-    this.props.setSelection({category: name})
+    this.props.setSelection({category: name, sortType: this.props.selection.sort})
     this.props.fetchPostsWithRedux(name);
   }
 
@@ -18,8 +19,10 @@ class CategoriesList extends Component{
         {
           categories && categories.map((category) => {
             return(
-              <NavItem key={category.name} onClick={ () => this.selectCategory(category.name) }>{category.name}
-              </NavItem>
+              <LinkContainer to={`/${category.name}`} key={category.name} >
+                <NavItem>{category.name}
+                </NavItem>
+              </LinkContainer>
             )
           })
         }
@@ -30,17 +33,18 @@ class CategoriesList extends Component{
 }
 
 
-function mapStateToProps({ categories }) {
+function mapStateToProps({ categories, selection }) {
   return {
-    categories: categories
+    categories: categories,
+    selection: selection
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setSelection: (category) => dispatch(setSelection(category)),
+    setSelection: (data) => dispatch(setSelection(data)),
     fetchPostsWithRedux: (byCategory) => dispatch(fetchPostsWithRedux(byCategory))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoriesList));

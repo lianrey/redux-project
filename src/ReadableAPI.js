@@ -19,7 +19,7 @@ export const getAllPosts = (byCategory, sortType) =>
         postsArray = posts;
       }
       else{
-        postsArray = posts.filter(p => p.category == byCategory);
+        postsArray = posts.filter(p => p.category === byCategory);
       }
       if(!sortType){
         return postsArray.sort(sortByVoteScore);

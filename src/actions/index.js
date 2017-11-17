@@ -14,9 +14,10 @@ export const getCategories = categories => ({
   categories
 })
 
-export const setSelection = ({ category }) => ({
+export const setSelection = ({ category, sortType }) => ({
   type: GET_SELECTIONS,
-  category
+  category,
+  sortType
 })
 
 export const fetchPostsWithRedux = (byCategory, sortType) => dispatch => (
