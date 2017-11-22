@@ -7,8 +7,8 @@ import { withRouter } from 'react-router-dom'
 
 class CategoriesList extends Component{
   selectCategory = (name) => {
-    this.props.setSelection({category: name, sortType: this.props.selection.sort})
-    this.props.fetchPostsWithRedux(name);
+    this.props.showPosts(null, name);
+    this.props.history.push('/'+ name);
   }
 
   render(){
@@ -19,10 +19,8 @@ class CategoriesList extends Component{
         {
           categories && categories.map((category) => {
             return(
-              <LinkContainer to={`/${category.name}`} key={category.name} >
-                <NavItem>{category.name}
-                </NavItem>
-              </LinkContainer>
+              <NavItem onClick={() => this.selectCategory(category.name)} key={category.name}>{category.name}
+              </NavItem>
             )
           })
         }

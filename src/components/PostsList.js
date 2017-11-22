@@ -4,6 +4,8 @@ import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { setSelection, fetchPostsWithRedux } from '../actions';
 import CategoriesList from './CategoriesList';
 import { withRouter } from 'react-router-dom';
+import serializerForm from 'form-serialize';
+import uuid from 'uuid';
 
 class PostsList extends Component {
   componentDidMount() {
@@ -14,19 +16,19 @@ class PostsList extends Component {
     }
   }
 
-  selectSort = (event) => {
-    let sortType = event.target.value;
-    let category = (this.props.selection)?this.props.selection.category: null;
+  selectSort = (event, category) => {
+    let sortType = (event)? event.target.value: "vote";
+    //let category = (this.props.selection)?this.props.selection.category: selectedCategory;
     this.props.setSelection({category: category, sortType: sortType})
     this.props.fetchPostsWithRedux(category, sortType);
+    console.log(category);
   }
 
   render(){
-
     const { posts } = this.props
     return (
       <div>
-        <CategoriesList>
+        <CategoriesList showPosts={this.selectSort}>
         </CategoriesList>
         <Panel>
           <span>Order by: </span>

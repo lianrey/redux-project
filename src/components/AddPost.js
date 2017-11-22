@@ -27,6 +27,7 @@ class AddPost extends Component{
         timestamp
       }
       this.props.addPostRedux(data);
+      this.props.history.push('/');
 	}
 
   render(){
