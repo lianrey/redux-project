@@ -36,3 +36,13 @@ export const getAllCategories = () =>
   fetch(`${process.env.REACT_APP_BACKEND}/categories`, { headers: headers } )
     .then(res => res.json())
     .then((categories) => categories);
+
+export const addPost = (body) =>
+  fetch(`${process.env.REACT_APP_BACKEND}/posts`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+  }).then(res => res.json())

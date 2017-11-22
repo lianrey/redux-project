@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPostsWithRedux, fetchCategoriesWithRedux } from '../actions';
 import PostsList from './PostsList';
+import AddPost from './AddPost';
 import { Route, Link, withRouter } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 class App extends Component {
   componentDidMount() {
@@ -17,16 +19,18 @@ class App extends Component {
       <header className="bs-docs-nav navbar navbar-default navbar-static-top">
         <div className="container">
           <Link to="/" className="navbar-brand">Redux project</Link>
+          <Link to="/posts/new" className="navbar-brand"><Button>Add new post</Button></Link>
         </div>
       </header>
         <div className="container">
           <Route exact path="/" render={({ history } ) => {
             return <PostsList />
           }} />
-          <Route path="/:category" render={({ match } ) => {
+          <Route exact path="/:category" render={({ match } ) => {
             const { category } = match.params;
             return <PostsList categoryParam = { category }/>
           }} />
+          <Route exact path="/posts/new" component={AddPost} />
         </div>
       </div>
     );

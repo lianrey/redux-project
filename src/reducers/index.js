@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS } from '../actions';
+import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS, ADD_POST } from '../actions';
 
 function posts(state = [], action) {
   const { posts } = action
@@ -7,6 +7,11 @@ function posts(state = [], action) {
   switch(action.type) {
     case GET_POSTS:
       return posts;
+    case ADD_POST:
+      return[
+        ... state,
+        posts
+      ]
     default:
       return state;
   }
