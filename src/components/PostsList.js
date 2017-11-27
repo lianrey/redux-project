@@ -4,7 +4,6 @@ import { Panel, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 import { setSelection, fetchPostsWithRedux, deletePostRedux, updateVotesRedux } from '../actions';
 import CategoriesList from './CategoriesList';
 import { withRouter } from 'react-router-dom';
-import serializerForm from 'form-serialize';
 import BtnDown from 'react-icons/lib/fa/thumbs-down'
 import BtnUp from 'react-icons/lib/fa/thumbs-up'
 
@@ -32,6 +31,10 @@ class PostsList extends Component {
     this.props.updateVotesRedux(id, type);
   }
 
+  viewDetailPost = (id, category) => {
+    this.props.history.push(`/${category}/${id}`);
+  }
+
   render(){
     const { posts } = this.props
     return (
@@ -49,7 +52,7 @@ class PostsList extends Component {
           {
             posts.map((post) => {
               return(
-                <Panel key={post.id} header={post.title} bsStyle="primary">
+                <Panel key={post.id} header={post.title} bsStyle="primary" onClick={() => this.viewDetailPost(post.id, post.category)}>
                   <p>{post.body}</p>
                   <p>Comments ({post.commentCount})</p>
                   <p>Votes: {post.voteScore}</p>

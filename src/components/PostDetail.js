@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Panel } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
-import { FormGroup, FormControl, Button, ControlLabel, ListGroup, ListGroupItem } from 'react-bootstrap';
-import serializerForm from 'form-serialize'
-import { addPostRedux } from '../actions';
-import uuid from 'uuid';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
 class PostDetail extends Component{
   render(){
     const { posts, postId } = this.props;
-    const selectedPost = posts ? posts.filter(p => { return p.id === postId }) : '';
+    const selectedPost = posts ? posts.filter(p => { return p.id === postId }) : [];
 
-    return (
-      <Panel key={selectedPost.id} header={selectedPost.title} bsStyle="primary">
-        <p>{selectedPost.body}</p>
-        <p>Comments ({selectedPost.commentCount})</p>
-        <p>Votes: {selectedPost.voteScore}</p>
-        <p>Category: {selectedPost.category}</p>
-        <ListGroup fill>
-          <ListGroupItem>{selectedPost.author} | {new Date(selectedPost.timestamp).toDateString()} {new Date(selectedPost.timestamp).toLocaleTimeString()}</ListGroupItem>
-        </ListGroup>
-      </Panel>
+    return(
+      <div>
+      { selectedPost.map((post) => (
+          <Panel key={post.id} header={post.title} bsStyle="primary">
+            <p>{post.body}</p>
+            <p>Comments ({post.commentCount})</p>
+            <p>Votes: {post.voteScore}</p>
+            <p>Category: {post.category}</p>
+            <ListGroup fill>
+              <ListGroupItem>{post.author} | {post.timestamp}</ListGroupItem>
+            </ListGroup>
+          </Panel>
+        ))
+      }
+      </div>
     )
   }
 }

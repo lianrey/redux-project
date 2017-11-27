@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Nav, NavItem } from 'react-bootstrap';
 import { setSelection, fetchPostsWithRedux } from '../actions';
-import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter } from 'react-router-dom'
 
 class CategoriesList extends Component{

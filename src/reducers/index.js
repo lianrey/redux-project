@@ -9,14 +9,14 @@ function posts(state = [], action) {
       return posts;
     case ADD_POST:
       return[
-        ... state,
+        ...state,
         posts
       ];
     case DELETE_POST:
       var currentPosts = state.filter(p => { return p.id !== posts});
       return currentPosts;
     case UPDATE_VOTES:
-      var currentPosts = state.filter(p => {
+      var currentPostsV = state.filter(p => {
         if(p.id === id){
           if(!p.voteScore) p.voteScore = 0;
           if(voteType === 'upVote')
@@ -26,7 +26,7 @@ function posts(state = [], action) {
         }
         return p;
       });
-      return currentPosts;
+      return currentPostsV;
     default:
       return state;
   }
