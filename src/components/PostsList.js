@@ -17,9 +17,9 @@ class PostsList extends Component {
   }
 
   selectSort = (event, category) => {
-    let sortType = (event)? event.target.value: "vote";
+    let sortType = (event)? event.target.value: "voteScore";
     //let category = (this.props.selection)?this.props.selection.category: selectedCategory;
-    this.props.setSelection({category: category, sortType: sortType})
+    this.props.setSelection({category: category, sortType: sortType});
     this.props.fetchPostsWithRedux(category, sortType);
   }
 
@@ -44,7 +44,7 @@ class PostsList extends Component {
         <Panel>
           <span>Order by: </span>
           <select onChange={this.selectSort}>
-            <option value="vote">Vote Score</option>
+            <option value="voteScore">Vote Score</option>
             <option value="timestamp">Date</option>
           </select>
         </Panel>
