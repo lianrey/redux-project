@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchPostsWithRedux, fetchCategoriesWithRedux } from '../actions';
 import PostsList from './PostsList';
 import AddPost from './AddPost';
+import PostDetail from './PostDetail';
 import { Route, Link, withRouter } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
@@ -29,6 +30,10 @@ class App extends Component {
           <Route exact path="/:category" render={({ match } ) => {
             const { category } = match.params;
             return <PostsList categoryParam = { category }/>
+          }} />
+          <Route exact path="/:category/:id" render={({ match }) => {
+            const { id } = match.params;
+            return <PostDetail postId={id} />
           }} />
           <Route exact path="/posts/new" component={AddPost} />
         </div>

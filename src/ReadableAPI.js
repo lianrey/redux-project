@@ -14,12 +14,13 @@ export const getAllPosts = (byCategory, sortType) =>
   fetch(`${process.env.REACT_APP_BACKEND}/posts`, { headers: headers } )
     .then(res => res.json())
     .then((posts) => {
+      let activePosts = posts;
       let postsArray;
       if(!byCategory) {
-        postsArray = posts;
+        postsArray = activePosts;
       }
       else{
-        postsArray = posts.filter(p => p.category === byCategory);
+        postsArray = activePosts.filter(p => p.category === byCategory);
       }
       if(!sortType){
         return postsArray.sort(sortByVoteScore);
@@ -45,4 +46,13 @@ export const addPost = (body) =>
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(body)
+  }).then(res => res.json())
+
+export const deletePost = (id) =>
+  fetch(`${process.env.REACT_APP_BACKEND}/posts/${id}`, {
+      method: 'DELETE',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      }
   }).then(res => res.json())

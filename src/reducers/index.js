@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS, ADD_POST } from '../actions';
+import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS, ADD_POST, DELETE_POST } from '../actions';
 
 function posts(state = [], action) {
   const { posts } = action
@@ -12,6 +12,9 @@ function posts(state = [], action) {
         ... state,
         posts
       ]
+    case DELETE_POST:
+      var currentPosts = state.filter(p => { return p.id !== posts});
+      return currentPosts;
     default:
       return state;
   }

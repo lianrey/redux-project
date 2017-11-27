@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { setSelection, fetchPostsWithRedux } from '../actions';
+import { Panel, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import { setSelection, fetchPostsWithRedux, deletePostRedux } from '../actions';
 import CategoriesList from './CategoriesList';
 import { withRouter } from 'react-router-dom';
 import serializerForm from 'form-serialize';
@@ -21,7 +21,10 @@ class PostsList extends Component {
     //let category = (this.props.selection)?this.props.selection.category: selectedCategory;
     this.props.setSelection({category: category, sortType: sortType})
     this.props.fetchPostsWithRedux(category, sortType);
-    console.log(category);
+  }
+
+  deletePost = (id) => {
+    this.props.deletePostRedux(id);
   }
 
   render(){
@@ -48,6 +51,10 @@ class PostsList extends Component {
                   <p>Category: {post.category}</p>
                   <ListGroup fill>
                     <ListGroupItem>{post.author} | {new Date(post.timestamp).toDateString()} {new Date(post.timestamp).toLocaleTimeString()}</ListGroupItem>
+                    <ListGroupItem>
+                      <Button bsStyle="primary">Edit</Button>
+                      <Button bsStyle="danger" onClick={() => this.deletePost(post.id)}>Delete</Button>
+                    </ListGroupItem>
                   </ListGroup>
                 </Panel>
               )
@@ -70,7 +77,8 @@ function mapStateToProps({ posts, selection }) {
 const mapDispatchToProps = (dispatch) => {
   return {
     setSelection: (data) => dispatch(setSelection(data)),
-    fetchPostsWithRedux: (byCategory, sortType) => dispatch(fetchPostsWithRedux(byCategory, sortType))
+    fetchPostsWithRedux: (byCategory, sortType) => dispatch(fetchPostsWithRedux(byCategory, sortType)),
+    deletePostRedux: (id) => dispatch(deletePostRedux(id))
   }
 }
 
