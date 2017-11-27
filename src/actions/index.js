@@ -5,6 +5,7 @@ export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const GET_SELECTIONS = 'GET_SELECTIONS'
 export const ADD_POST = 'ADD_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const UPDATE_VOTES = 'UPDATE_VOTES'
 
 export const getPosts = posts => ({
   type: GET_POSTS,
@@ -32,6 +33,12 @@ export const deletePost = (posts) => ({
   posts
 })
 
+export const updateVotes = ({ id, voteType }) => ({
+  type: UPDATE_VOTES,
+  id,
+  voteType
+})
+
 export const fetchPostsWithRedux = (byCategory, sortType) => dispatch => (
   ReadableAPI
     .getAllPosts(byCategory, sortType)
@@ -54,4 +61,10 @@ export const deletePostRedux = (id) => dispatch => (
   ReadableAPI
     .deletePost(id)
     .then(dispatch(deletePost(id)))
+);
+
+export const updateVotesRedux = (id, voteType) => dispatch => (
+  ReadableAPI
+    .updateVotes(id, voteType)
+    .then(dispatch(updateVotes({id, voteType})))
 );

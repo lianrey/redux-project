@@ -56,3 +56,13 @@ export const deletePost = (id) =>
         'Content-Type': 'application/json'
       }
   }).then(res => res.json())
+
+export const updateVotes = (id, type) =>
+  fetch(`${process.env.REACT_APP_BACKEND}/posts/${id}`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ "option": type })
+  }).then(res => res.json())

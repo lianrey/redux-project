@@ -17,6 +17,8 @@ class AddPost extends Component{
       const category = values.category;
       const id = uuid();
       const timestamp = new Date().getTime();
+      const voteScore = 0;
+      const commentCount = [];
 
       const data = {
         id,
@@ -24,7 +26,9 @@ class AddPost extends Component{
         author,
         body,
         category,
-        timestamp
+        timestamp,
+        voteScore,
+        commentCount
       }
       this.props.addPostRedux(data);
       this.props.history.push('/');

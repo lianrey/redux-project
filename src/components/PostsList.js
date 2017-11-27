@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Panel, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
-import { setSelection, fetchPostsWithRedux, deletePostRedux } from '../actions';
+import { setSelection, fetchPostsWithRedux, deletePostRedux, updateVotesRedux } from '../actions';
 import CategoriesList from './CategoriesList';
 import { withRouter } from 'react-router-dom';
 import serializerForm from 'form-serialize';
-import uuid from 'uuid';
+import BtnDown from 'react-icons/lib/fa/thumbs-down'
+import BtnUp from 'react-icons/lib/fa/thumbs-up'
 
 class PostsList extends Component {
   componentDidMount() {
@@ -25,6 +26,10 @@ class PostsList extends Component {
 
   deletePost = (id) => {
     this.props.deletePostRedux(id);
+  }
+
+  updateVotes = (id, type) => {
+    this.props.updateVotesRedux(id, type);
   }
 
   render(){
@@ -50,7 +55,16 @@ class PostsList extends Component {
                   <p>Votes: {post.voteScore}</p>
                   <p>Category: {post.category}</p>
                   <ListGroup fill>
-                    <ListGroupItem>{post.author} | {new Date(post.timestamp).toDateString()} {new Date(post.timestamp).toLocaleTimeString()}</ListGroupItem>
+                    <ListGroupItem>Author: {post.author} | {new Date(post.timestamp).toDateString()} {new Date(post.timestamp).toLocaleTimeString()}</ListGroupItem>
+                    <ListGroupItem>
+                      <Button onClick={() => {this.updateVotes(post.id, "downVote")}}>
+                        <BtnDown size={30}/>
+                      </Button>
+                      <span> {post.voteScore} </span>
+                      <Button onClick={() => {this.updateVotes(post.id, "upVote")}}>
+                        <BtnUp size={30}/>
+                      </Button>
+                    </ListGroupItem>
                     <ListGroupItem>
                       <Button bsStyle="primary">Edit</Button>
                       <Button bsStyle="danger" onClick={() => this.deletePost(post.id)}>Delete</Button>
@@ -78,7 +92,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setSelection: (data) => dispatch(setSelection(data)),
     fetchPostsWithRedux: (byCategory, sortType) => dispatch(fetchPostsWithRedux(byCategory, sortType)),
-    deletePostRedux: (id) => dispatch(deletePostRedux(id))
+    deletePostRedux: (id) => dispatch(deletePostRedux(id)),
+    updateVotesRedux: (id, type) => dispatch(updateVotesRedux(id, type))
   }
 }
 

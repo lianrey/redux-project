@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPostsWithRedux, fetchCategoriesWithRedux } from '../actions';
+import { fetchPostsWithRedux, fetchCategoriesWithRedux, setSelection } from '../actions';
 import PostsList from './PostsList';
 import AddPost from './AddPost';
 import PostDetail from './PostDetail';
@@ -9,6 +9,7 @@ import { Button } from 'react-bootstrap';
 
 class App extends Component {
   componentDidMount() {
+    this.props.setSelection({category: null, sortType: "vote"})
     this.props.fetchPostsWithRedux();
     this.props.fetchCategoriesWithRedux();
   }
@@ -51,6 +52,7 @@ const mapStateToProps = ({ posts, categories }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setSelection: (data) => dispatch(setSelection(data)),
     fetchPostsWithRedux: (byCategory) => dispatch(fetchPostsWithRedux(byCategory)),
     fetchCategoriesWithRedux: () => dispatch(fetchCategoriesWithRedux())
   }
