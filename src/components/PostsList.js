@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Panel, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import { Panel, ListGroup, ListGroupItem, Button, ButtonToolbar } from 'react-bootstrap';
 import { setSelection, fetchPostsWithRedux, deletePostRedux, updateVotesRedux } from '../actions';
 import CategoriesList from './CategoriesList';
 import { withRouter } from 'react-router-dom';
@@ -69,8 +69,10 @@ class PostsList extends Component {
                       </Button>
                     </ListGroupItem>
                     <ListGroupItem>
-                      <Button bsStyle="primary">Edit</Button>
-                      <Button bsStyle="danger" onClick={() => this.deletePost(post.id)}>Delete</Button>
+                      <ButtonToolbar>
+                        <Button bsStyle="primary">Edit</Button>
+                        <Button bsStyle="danger" onClick={() => this.deletePost(post.id)}>Delete</Button>
+                      </ButtonToolbar>
                     </ListGroupItem>
                   </ListGroup>
                 </Panel>

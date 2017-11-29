@@ -9,7 +9,7 @@ import { Button } from 'react-bootstrap';
 
 class App extends Component {
   componentDidMount() {
-    //this.props.setSelection({category: null, sortType: "voteScore"})
+    this.props.setSelection({category: null, sortType: "voteScore"})
     this.props.fetchPostsWithRedux();
     this.props.fetchCategoriesWithRedux();
   }

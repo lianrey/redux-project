@@ -13,23 +13,36 @@ function sortByTimeStamp(a, b){
 export const getAllPosts = (byCategory, sortType) =>
   fetch(`${process.env.REACT_APP_BACKEND}/posts`, { headers: headers } )
     .then(res => res.json())
-    .then((posts) => { 
+    .then((posts) => {
       let postsArray;
+      let allPost = [];
       if(!byCategory) {
         postsArray = posts;
       }
       else{
         postsArray = posts.filter(p => p.category === byCategory);
       }
+
       if(sortType !== null){
         if(sortType === "voteScore"){
-          return postsArray.sort(sortByVoteScore);
+          postsArray.sort(sortByVoteScore);
         }
-        return postsArray.sort(sortByTimeStamp);
+        postsArray.sort(sortByTimeStamp);
       }
       else{
-        return postsArray.sort(sortByVoteScore);
+        postsArray.sort(sortByVoteScore);
       }
+
+      allPost =postsArray.map((post) => {
+        return fetch(`${process.env.REACT_APP_BACKEND}/posts/${post.id}/comments`, { headers: headers })
+            .then(res => res.json())
+            .then((comments) => {
+              post.comments = comments;
+              return post;
+            });
+      });
+
+      return Promise.all(allPost);
     });
 
 export const getAllCategories = () =>
