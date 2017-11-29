@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS, ADD_POST, DELETE_POST, UPDATE_VOTES } from '../actions';
+import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS, ADD_POST, DELETE_POST, UPDATE_VOTES, DELETE_COMMENT } from '../actions';
 
 function posts(state = [], action) {
-  const { posts, id, voteType } = action
+  const { posts, postId, voteType, commentId } = action
 
   switch(action.type) {
     case GET_POSTS:
@@ -17,7 +17,7 @@ function posts(state = [], action) {
       return currentPosts;
     case UPDATE_VOTES:
       var currentPostsV = state.filter(p => {
-        if(p.id === id){
+        if(p.id === postId){
           if(!p.voteScore) p.voteScore = 0;
           if(voteType === 'upVote')
             p.voteScore++
@@ -27,6 +27,14 @@ function posts(state = [], action) {
         return p;
       });
       return currentPostsV;
+    case DELETE_COMMENT:
+      var currentPosts = state.filter(p => {
+        if(p.id === postId){
+          p.comments = p.comments.filter(c => c.id !== commentId)
+        }
+        return p;
+      });
+      return currentPosts;
     default:
       return state;
   }

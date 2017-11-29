@@ -6,6 +6,7 @@ export const GET_SELECTIONS = 'GET_SELECTIONS'
 export const ADD_POST = 'ADD_POST'
 export const DELETE_POST = 'DELETE_POST'
 export const UPDATE_VOTES = 'UPDATE_VOTES'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export const getPosts = posts => ({
   type: GET_POSTS,
@@ -33,10 +34,16 @@ export const deletePost = (posts) => ({
   posts
 })
 
-export const updateVotes = ({ id, voteType }) => ({
+export const updateVotes = ({ postId, voteType }) => ({
   type: UPDATE_VOTES,
-  id,
+  postId,
   voteType
+})
+
+export const deleteComment = ({postId, commentId}) => ({
+  type: DELETE_COMMENT,
+  postId,
+  commentId
 })
 
 export const fetchPostsWithRedux = (byCategory, sortType) => dispatch => (
@@ -63,8 +70,14 @@ export const deletePostRedux = (id) => dispatch => (
     .then(dispatch(deletePost(id)))
 );
 
-export const updateVotesRedux = (id, voteType) => dispatch => (
+export const updateVotesRedux = (postId, voteType) => dispatch => (
   ReadableAPI
-    .updateVotes(id, voteType)
-    .then(dispatch(updateVotes({id, voteType})))
+    .updateVotes(postId, voteType)
+    .then(dispatch(updateVotes({postId, voteType})))
+);
+
+export const deleteCommentRedux = (postId, commentId) => dispatch => (
+  ReadableAPI
+    .deleteComment(commentId)
+    .then(dispatch(deleteComment({postId, commentId})))
 );

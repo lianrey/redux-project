@@ -78,3 +78,12 @@ export const updateVotes = (id, type) =>
       },
       body: JSON.stringify({ "option": type })
   }).then(res => res.json())
+
+export const deleteComment = (id) =>
+  fetch(`${process.env.REACT_APP_BACKEND}/comments/${id}`, {
+      method: 'DELETE',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      }
+  }).then(res => res.json())
