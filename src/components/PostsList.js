@@ -10,7 +10,6 @@ import BtnUp from 'react-icons/lib/fa/thumbs-up'
 class PostsList extends Component {
   componentDidMount() {
     let category = this.props.categoryParam;
-    console.log(category)
     if(category){
       this.props.fetchPostsWithRedux(category, null);
     }

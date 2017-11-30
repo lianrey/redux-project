@@ -7,8 +7,25 @@ import { updateVotesRedux, deletePostRedux, deleteCommentRedux } from '../action
 import BtnDown from 'react-icons/lib/fa/thumbs-down'
 import BtnUp from 'react-icons/lib/fa/thumbs-up'
 import { Button, ButtonToolbar } from 'react-bootstrap';
+import Modal from 'react-modal'
+import AddComment from './AddComment';
 
 class PostDetail extends Component{
+  state = {
+    commentModalOpen: false
+  }
+  openCommentModal = () => {
+    this.setState(() => ({
+      commentModalOpen: true
+    }))
+  }
+
+  closeCommentModal = () => {
+    this.setState(() => ({
+      commentModalOpen: false
+    }))
+  }
+
   updateVotes = (id, type) => {
     this.props.updateVotesRedux(id, type);
   }
@@ -22,7 +39,12 @@ class PostDetail extends Component{
     this.props.deleteCommentRedux(postId, commentId);
   }
 
+  addComment = (postId) => {
+    this.openCommentModal();
+  }
+
   render(){
+    const { commentModalOpen } = this.state;
     const { posts, postId } = this.props;
     const selectedPost = posts ? posts.filter(p => { return p.id === postId }) : [];
 
@@ -45,7 +67,7 @@ class PostDetail extends Component{
               </ListGroupItem>
               <ListGroupItem>{post.author} | {post.timestamp}</ListGroupItem>
               <ListGroupItem>
-                <b>Comments: ({post.commentCount})</b><br/>
+                <b>Comments: ({post.commentCount})</b> <Button bsStyle="primary" onClick={() => this.addComment(post.id)}>Add Comment</Button><br/>
                 {
                   post.comments.map((c) => {
                     return(
@@ -70,11 +92,19 @@ class PostDetail extends Component{
               </ListGroupItem>
               <ListGroupItem>
                 <ButtonToolbar>
-                  <Button bsStyle="primary" bsSize="large">Edit</Button>
                   <Button bsStyle="danger" bsSize="large" onClick={() => this.deleteComment(post.id)}>Delete</Button>
                 </ButtonToolbar>
               </ListGroupItem>
             </ListGroup>
+            <Modal
+                isOpen={commentModalOpen}
+                onRequestClose={this.closeCommentModal}
+                contentLabel='Modal'
+              >
+              <div>
+                <AddComment category={post.category} postId={post.id} closeModal={this.closeCommentModal} />
+              </div>
+            </Modal>
           </Panel>
         ))
       }

@@ -9,7 +9,7 @@ import { Button } from 'react-bootstrap';
 
 class App extends Component {
   componentDidMount() {
-    this.props.setSelection({category: null, sortType: "voteScore"})
+    this.props.setSelection({category: null, sortType: "voteScore"});
     this.props.fetchPostsWithRedux();
     this.props.fetchCategoriesWithRedux();
   }
@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <div className="App">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
-      <header className="bs-docs-nav navbar navbar-default navbar-static-top">
+      <header className="bs-docs-nav navbar navbar-default navbar-static-top customHeader">
         <div className="container">
           <Link to="/" className="navbar-brand">Redux project</Link>
           <Link to="/posts/new" className="navbar-brand"><Button>Add new post</Button></Link>

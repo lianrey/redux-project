@@ -65,7 +65,7 @@ class AddPost extends Component{
                </FormGroup>
                <FormGroup controlId="formControlsTextarea">
                  <ControlLabel>Post:</ControlLabel>
-                 <FormControl componentClass="textarea" placeholder="textarea" name="body"/>
+                 <FormControl componentClass="textarea" name="body"/>
                </FormGroup>
 
                 <Button type="submit">

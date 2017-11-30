@@ -87,3 +87,13 @@ export const deleteComment = (id) =>
         'Content-Type': 'application/json'
       }
   }).then(res => res.json())
+
+export const addComment = (body) =>
+  fetch(`${process.env.REACT_APP_BACKEND}/comments`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+  }).then(res => res.json())
