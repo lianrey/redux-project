@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS, ADD_POST, DELETE_POST, UPDATE_VOTES, DELETE_COMMENT, ADD_COMMENT } from '../actions';
+import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS, ADD_POST, DELETE_POST, UPDATE_VOTES, DELETE_COMMENT, ADD_COMMENT, UPDATE_COMMENT_VOTES } from '../actions';
 
 function posts(state = [], action) {
   const { posts, postId, voteType, commentId, comment } = action
@@ -29,6 +29,7 @@ function posts(state = [], action) {
       return currentPostsV;
     case DELETE_COMMENT:
       var currentPostsD = state.filter(p => {
+        p.commentCount--;
         if(p.id === postId){
           p.comments = p.comments.filter(c => c.id !== commentId)
         }
@@ -37,12 +38,29 @@ function posts(state = [], action) {
       return currentPostsD;
     case ADD_COMMENT:
       var currentPostsAdd = state.filter(p => {
+        p.commentCount++;
         if(p.id === comment.parentId){
           p.comments = [...p.comments, comment]
         }
         return p;
       });
       return currentPostsAdd;
+    case UPDATE_COMMENT_VOTES:
+      var currentPostWC = state.map(p => {
+        if(p.id === comment.parentId){
+          p.comments = p.comments.map(c => {
+            if(c.id === comment.id){
+              if(voteType === 'upVote')
+                c.voteScore++
+              else
+                c.voteScore--;
+            }
+            return c;
+          });
+        }
+        return p;
+      });
+      return currentPostWC;
     default:
       return state;
   }

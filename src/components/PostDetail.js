@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { Panel } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { updateVotesRedux, deletePostRedux, deleteCommentRedux } from '../actions';
 import BtnDown from 'react-icons/lib/fa/thumbs-down'
 import BtnUp from 'react-icons/lib/fa/thumbs-up'
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import Modal from 'react-modal'
 import AddComment from './AddComment';
+import { deletePostRedux, deleteCommentRedux, updateVotesRedux, updateCommentVotesRedux } from '../actions';
 
 class PostDetail extends Component{
   state = {
@@ -26,8 +26,12 @@ class PostDetail extends Component{
     }))
   }
 
-  updateVotes = (id, type) => {
+  updatePostVotes = (id, type) => {
     this.props.updateVotesRedux(id, type);
+  }
+
+  updateCommentVotes = (comment, type) => {
+    this.props.updateCommentVotesRedux(comment, type)
   }
 
   deletePost = (id) => {
@@ -57,11 +61,11 @@ class PostDetail extends Component{
             <p>Category: {post.category}</p>
             <ListGroup fill>
               <ListGroupItem>
-                <Button onClick={() => {this.updateVotes(post.id, "downVote")}}>
+                <Button onClick={() => {this.updatePostVotes(post.id, "downVote")}}>
                   <BtnDown size={30}/>
                 </Button>
                 <span> {post.voteScore} </span>
-                <Button onClick={() => {this.updateVotes(post.id, "upVote")}}>
+                <Button onClick={() => {this.updatePostVotes(post.id, "upVote")}}>
                   <BtnUp size={30}/>
                 </Button>
               </ListGroupItem>
@@ -75,11 +79,11 @@ class PostDetail extends Component{
                         <div>
                           <p>{c.body}</p>
                           <p>Author: {c.author}</p>
-                          <Button onClick={() => {this.updateVotes(post.id, "downVote")}}>
+                          <Button onClick={() => {this.updateCommentVotes(c, "downVote")}}>
                             <BtnDown size={15}/>
                           </Button>
                           <span> {c.voteScore} </span>
-                          <Button onClick={() => {this.updateVotes(post.id, "upVote")}}>
+                          <Button onClick={() => {this.updateCommentVotes(c, "upVote")}}>
                             <BtnUp size={15}/>
                           </Button>
                           <br /><br />
@@ -123,6 +127,7 @@ function mapStateToProps({posts}) {
 const mapDispatchToProps = (dispatch) => {
   return {
     deletePostRedux: (id) => dispatch(deletePostRedux(id)),
+    updateCommentVotesRedux: (comment, type) => dispatch(updateCommentVotesRedux(comment, type)),
     updateVotesRedux: (id, type) => dispatch(updateVotesRedux(id, type)),
     deleteCommentRedux: (postId, commentId) => dispatch(deleteCommentRedux(postId, commentId))
   }

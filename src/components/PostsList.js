@@ -51,7 +51,7 @@ class PostsList extends Component {
           {
             posts.map((post) => {
               return(
-                <Panel key={post.id} header={post.title} bsStyle="primary" onClick={() => this.viewDetailPost(post.id, post.category)}>
+                <Panel key={post.id} header={post.title} bsStyle="primary">
                   <p>{post.body}</p>
                   <p>Comments ({post.commentCount})</p>
                   <p>Votes: {post.voteScore}</p>
@@ -69,7 +69,7 @@ class PostsList extends Component {
                     </ListGroupItem>
                     <ListGroupItem>
                       <ButtonToolbar>
-                        <Button bsStyle="primary">Edit</Button>
+                        <Button bsStyle="primary" onClick={() => this.viewDetailPost(post.id, post.category)}>Edit</Button>
                         <Button bsStyle="danger" onClick={() => this.deletePost(post.id)}>Delete</Button>
                       </ButtonToolbar>
                     </ListGroupItem>

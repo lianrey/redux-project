@@ -97,3 +97,13 @@ export const addComment = (body) =>
       },
       body: JSON.stringify(body)
   }).then(res => res.json())
+
+export const updateCommentVotes = (comment, type) =>
+  fetch(`${process.env.REACT_APP_BACKEND}/comments/${comment.id}`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ "option": type })
+  }).then(res => res.json())
