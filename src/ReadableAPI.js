@@ -27,7 +27,9 @@ export const getAllPosts = (byCategory, sortType) =>
         if(sortType === "voteScore"){
           postsArray.sort(sortByVoteScore);
         }
-        postsArray.sort(sortByTimeStamp);
+        else{
+          postsArray.sort(sortByTimeStamp);
+        }
       }
       else{
         postsArray.sort(sortByVoteScore);

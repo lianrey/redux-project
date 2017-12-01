@@ -9,16 +9,15 @@ import BtnUp from 'react-icons/lib/fa/thumbs-up'
 
 class PostsList extends Component {
   componentDidMount() {
+    this.props.setSelection({category: null, sortType: "voteScore"});
     let category = this.props.categoryParam;
-    if(category){
-      this.props.fetchPostsWithRedux(category, null);
-    }
+    this.props.fetchPostsWithRedux(category, null);
   }
 
   selectSort = (event, category) => {
     let sortType = (event)? event.target.value: "voteScore";
-    //let category = (this.props.selection)?this.props.selection.category: selectedCategory;
-    this.props.setSelection({category: category, sortType: sortType});
+    let categoryName = (typeof category === 'undefined')?null: category;
+    this.props.setSelection({category: categoryName, sortType: sortType});
     this.props.fetchPostsWithRedux(category, sortType);
   }
 
