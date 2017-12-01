@@ -8,21 +8,35 @@ import BtnUp from 'react-icons/lib/fa/thumbs-up'
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import Modal from 'react-modal'
 import AddComment from './AddComment';
-import { deletePostRedux, deleteCommentRedux, updateVotesRedux, updateCommentVotesRedux } from '../actions';
+import EditComment from './EditComment';
+import { deletePostRedux, deleteCommentRedux, updateVotesRedux, updateCommentVotesRedux, editCommentRedux } from '../actions';
 
 class PostDetail extends Component{
   state = {
-    commentModalOpen: false
+    addCommentModalOpen: false,
+    editCommentModalOpen: false
   }
   openCommentModal = () => {
     this.setState(() => ({
-      commentModalOpen: true
+      addCommentModalOpen: true
     }))
   }
 
   closeCommentModal = () => {
     this.setState(() => ({
-      commentModalOpen: false
+      addCommentModalOpen: false
+    }))
+  }
+
+  openEditCommentModal = () => {
+    this.setState(() => ({
+      editCommentModalOpen: true
+    }))
+  }
+
+  closeEditCommentModal = () => {
+    this.setState(() => ({
+      editCommentModalOpen: false
     }))
   }
 
@@ -47,8 +61,12 @@ class PostDetail extends Component{
     this.openCommentModal();
   }
 
+  editComment = (postId, comment) => {
+    this.openEditCommentModal();
+  }
+
   render(){
-    const { commentModalOpen } = this.state;
+    const { addCommentModalOpen, editCommentModalOpen } = this.state;
     const { posts, postId } = this.props;
     const selectedPost = posts ? posts.filter(p => { return p.id === postId }) : [];
 
@@ -71,7 +89,7 @@ class PostDetail extends Component{
               </ListGroupItem>
               <ListGroupItem>{post.author} | {post.timestamp}</ListGroupItem>
               <ListGroupItem>
-                <b>Comments: ({post.commentCount})</b> <Button bsStyle="primary" onClick={() => this.addComment(post.id)}>Add Comment</Button><br/>
+                <b>Comments: ({post.commentCount})</b> <Button bsStyle="primary" onClick={() => this.addComment(post.id)}>Add Comment</Button><br/><br/>
                 {
                   post.comments.map((c) => {
                     return(
@@ -87,8 +105,18 @@ class PostDetail extends Component{
                             <BtnUp size={15}/>
                           </Button>
                           <br /><br />
+                          <Button bsStyle="primary" onClick={() => this.editComment(post.id, c)}>Edit</Button>
                           <Button bsStyle="danger" onClick={() => this.deleteComment(post.id, c.id)}>Delete</Button>
                         </div>
+                        <Modal
+                            isOpen={editCommentModalOpen}
+                            onRequestClose={this.closeEditCommentModal}
+                            contentLabel='Modal'
+                          >
+                          <div>
+                            <EditComment comment={c} closeModal={this.closeEditCommentModal} />
+                          </div>
+                        </Modal>
                       </Panel>
                     )
                   })
@@ -101,7 +129,7 @@ class PostDetail extends Component{
               </ListGroupItem>
             </ListGroup>
             <Modal
-                isOpen={commentModalOpen}
+                isOpen={addCommentModalOpen}
                 onRequestClose={this.closeCommentModal}
                 contentLabel='Modal'
               >
@@ -129,7 +157,8 @@ const mapDispatchToProps = (dispatch) => {
     deletePostRedux: (id) => dispatch(deletePostRedux(id)),
     updateCommentVotesRedux: (comment, type) => dispatch(updateCommentVotesRedux(comment, type)),
     updateVotesRedux: (id, type) => dispatch(updateVotesRedux(id, type)),
-    deleteCommentRedux: (postId, commentId) => dispatch(deleteCommentRedux(postId, commentId))
+    deleteCommentRedux: (postId, commentId) => dispatch(deleteCommentRedux(postId, commentId)),
+    editCommentRedux: (comment) => dispatch(editCommentRedux(comment))
   }
 }
 
