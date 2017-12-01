@@ -47,6 +47,13 @@ export const getAllPosts = (byCategory, sortType) =>
       return Promise.all(allPost);
     });
 
+export const getPost = (postId) =>
+  fetch(`${process.env.REACT_APP_BACKEND}/posts/${postId}`, { headers: headers } )
+    .then(res => res.json())
+    .then((post) => {
+      return post;
+    });
+
 export const getAllCategories = () =>
   fetch(`${process.env.REACT_APP_BACKEND}/categories`, { headers: headers } )
     .then(res => res.json())

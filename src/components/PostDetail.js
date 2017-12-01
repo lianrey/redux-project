@@ -14,7 +14,8 @@ import { deletePostRedux, deleteCommentRedux, updateVotesRedux, updateCommentVot
 class PostDetail extends Component{
   state = {
     addCommentModalOpen: false,
-    editCommentModalOpen: false
+    editCommentModalOpen: false,
+    selectedComment: {}
   }
   openCommentModal = () => {
     this.setState(() => ({
@@ -63,6 +64,9 @@ class PostDetail extends Component{
 
   editComment = (postId, comment) => {
     this.openEditCommentModal();
+    this.setState({
+      selectedComment: comment
+    })
   }
 
   render(){
@@ -114,7 +118,7 @@ class PostDetail extends Component{
                             contentLabel='Modal'
                           >
                           <div>
-                            <EditComment comment={c} closeModal={this.closeEditCommentModal} />
+                            <EditComment comment={this.state.selectedComment} closeModal={this.closeEditCommentModal} />
                           </div>
                         </Modal>
                       </Panel>
