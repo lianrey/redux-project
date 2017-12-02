@@ -4,6 +4,7 @@ export const GET_POSTS = 'GET_POSTS';
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const GET_SELECTIONS = 'GET_SELECTIONS'
 export const ADD_POST = 'ADD_POST'
+export const EDIT_POST = 'EDIT_POST'
 export const DELETE_POST = 'DELETE_POST'
 export const UPDATE_VOTES = 'UPDATE_VOTES'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
@@ -29,6 +30,11 @@ export const setSelection = ({ category, sortType }) => ({
 export const addPost = (posts) => ({
   type: ADD_POST,
   posts
+})
+
+export const editPost = (post) => ({
+  type: EDIT_POST,
+  post
 })
 
 export const deletePost = (posts) => ({
@@ -75,6 +81,12 @@ export const addPostRedux = (post) => dispatch => (
   ReadableAPI
     .addPost(post)
     .then(dispatch(addPost(post)))
+);
+
+export const editPostRedux = (post) => dispatch => (
+  ReadableAPI
+    .editPost(post)
+    .then(dispatch(editPost(post)))
 );
 
 export const deletePostRedux = (id) => dispatch => (

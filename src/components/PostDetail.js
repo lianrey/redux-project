@@ -6,16 +6,18 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import BtnDown from 'react-icons/lib/fa/thumbs-down'
 import BtnUp from 'react-icons/lib/fa/thumbs-up'
 import { Button, ButtonToolbar } from 'react-bootstrap';
-import Modal from 'react-modal'
+import Modal from 'react-modal';
 import AddComment from './AddComment';
 import EditComment from './EditComment';
-import { deletePostRedux, deleteCommentRedux, updateVotesRedux, updateCommentVotesRedux, editCommentRedux } from '../actions';
+import EditPost from './EditPost';
+import { deletePostRedux, deleteCommentRedux, updateVotesRedux, updateCommentVotesRedux, editCommentRedux, editPostRedux} from '../actions';
 
 class PostDetail extends Component{
   state = {
     addCommentModalOpen: false,
     editCommentModalOpen: false,
-    selectedComment: {}
+    selectedComment: {},
+    editPostModalOpen: false
   }
   openCommentModal = () => {
     this.setState(() => ({
@@ -38,6 +40,18 @@ class PostDetail extends Component{
   closeEditCommentModal = () => {
     this.setState(() => ({
       editCommentModalOpen: false
+    }))
+  }
+
+  openEditPostModal = () => {
+    this.setState(() => ({
+      editPostModalOpen: true
+    }))
+  }
+
+  closeEditPostModal = () => {
+    this.setState(() => ({
+      editPostModalOpen: false
     }))
   }
 
@@ -67,6 +81,10 @@ class PostDetail extends Component{
     this.setState({
       selectedComment: comment
     })
+  }
+
+  editPost = () => {
+    this.openEditPostModal();
   }
 
   render(){
@@ -128,7 +146,8 @@ class PostDetail extends Component{
               </ListGroupItem>
               <ListGroupItem>
                 <ButtonToolbar>
-                  <Button bsStyle="danger" bsSize="large" onClick={() => this.deleteComment(post.id)}>Delete</Button>
+                  <Button bsStyle="primary" bsSize="large" onClick={() => this.editPost()}>Edit</Button>
+                  <Button bsStyle="danger" bsSize="large" onClick={() => this.deletePost(post.id)}>Delete</Button>
                 </ButtonToolbar>
               </ListGroupItem>
             </ListGroup>
@@ -141,6 +160,7 @@ class PostDetail extends Component{
                 <AddComment category={post.category} postId={post.id} closeModal={this.closeCommentModal} />
               </div>
             </Modal>
+            <EditPost post={post} openModal={this.state.editPostModalOpen} closeModal={this.closeEditPostModal}/>
           </Panel>
         ))
       }
@@ -162,7 +182,8 @@ const mapDispatchToProps = (dispatch) => {
     updateCommentVotesRedux: (comment, type) => dispatch(updateCommentVotesRedux(comment, type)),
     updateVotesRedux: (id, type) => dispatch(updateVotesRedux(id, type)),
     deleteCommentRedux: (postId, commentId) => dispatch(deleteCommentRedux(postId, commentId)),
-    editCommentRedux: (comment) => dispatch(editCommentRedux(comment))
+    editCommentRedux: (comment) => dispatch(editCommentRedux(comment)),
+    editPostRedux: (post) => dispatch(editPostRedux(post))
   }
 }
 

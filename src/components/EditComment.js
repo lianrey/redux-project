@@ -26,7 +26,7 @@ class EditComment extends Component{
       <Grid>
         <Row className="show-grid">
           <Col md={10}>
-            <Panel header="Add a new comment">
+            <Panel header="Edit a comment">
               <form onSubmit={this.handleSubmit}>
                 <FormGroup>
                   <label>Author: </label> {comment.author}

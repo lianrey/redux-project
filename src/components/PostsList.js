@@ -4,10 +4,26 @@ import { Panel, ListGroup, ListGroupItem, Button, ButtonToolbar } from 'react-bo
 import { setSelection, fetchPostsWithRedux, deletePostRedux, updateVotesRedux } from '../actions';
 import CategoriesList from './CategoriesList';
 import { withRouter } from 'react-router-dom';
-import BtnDown from 'react-icons/lib/fa/thumbs-down'
-import BtnUp from 'react-icons/lib/fa/thumbs-up'
+import BtnDown from 'react-icons/lib/fa/thumbs-down';
+import BtnUp from 'react-icons/lib/fa/thumbs-up';
+import EditPost from './EditPost';
 
 class PostsList extends Component {
+  state = {
+    editPostModalOpen: false
+  }
+  openEditPostModal = () => {
+    this.setState(() => ({
+      editPostModalOpen: true
+    }))
+  }
+
+  closeEditPostModal = () => {
+    this.setState(() => ({
+      editPostModalOpen: false
+    }))
+  }
+
   componentDidMount() {
     this.props.setSelection({category: null, sortType: "voteScore"});
     let category = this.props.categoryParam;
@@ -31,6 +47,10 @@ class PostsList extends Component {
 
   viewDetailPost = (id, category) => {
     this.props.history.push(`/${category}/${id}`);
+  }
+
+  editPost = () => {
+    this.openEditPostModal();
   }
 
   render(){
@@ -68,11 +88,13 @@ class PostsList extends Component {
                     </ListGroupItem>
                     <ListGroupItem>
                       <ButtonToolbar>
-                        <Button bsStyle="primary" onClick={() => this.viewDetailPost(post.id, post.category)}>Edit</Button>
+                        <Button bsStyle="primary" onClick={() => this.editPost()}>Edit</Button>
+                        <Button bsStyle="primary" onClick={() => this.viewDetailPost(post.id, post.category)}>See Details</Button>
                         <Button bsStyle="danger" onClick={() => this.deletePost(post.id)}>Delete</Button>
                       </ButtonToolbar>
                     </ListGroupItem>
                   </ListGroup>
+                  <EditPost post={post} openModal={this.state.editPostModalOpen} closeModal={this.closeEditPostModal}/>
                 </Panel>
               )
             })
