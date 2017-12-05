@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom'
 import { FormGroup, FormControl, Button, ControlLabel } from 'react-bootstrap';
 import serializerForm from 'form-serialize'
 import { editCommentRedux } from '../actions';
-import uuid from 'uuid';
 
 class EditComment extends Component{
   handleSubmit = (e) => {

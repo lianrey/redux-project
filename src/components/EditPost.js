@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom'
 import { FormGroup, FormControl, Button, ControlLabel } from 'react-bootstrap';
 import serializerForm from 'form-serialize'
 import { editPostRedux } from '../actions';
-import uuid from 'uuid';
 import Modal from 'react-modal';
 
 class EditPost extends Component{

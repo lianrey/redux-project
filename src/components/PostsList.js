@@ -10,7 +10,8 @@ import EditPost from './EditPost';
 
 class PostsList extends Component {
   state = {
-    editPostModalOpen: false
+    editPostModalOpen: false,
+    selectedPost: {}
   }
   openEditPostModal = () => {
     this.setState(() => ({
@@ -18,7 +19,7 @@ class PostsList extends Component {
     }))
   }
 
-  closeEditPostModal = () => {
+  closeEditPostModal = () => {console.log('a');
     this.setState(() => ({
       editPostModalOpen: false
     }))
@@ -49,7 +50,8 @@ class PostsList extends Component {
     this.props.history.push(`/${category}/${id}`);
   }
 
-  editPost = () => {
+  editPost = (post) => {
+    this.setState({selectedPost: post});
     this.openEditPostModal();
   }
 
@@ -88,13 +90,13 @@ class PostsList extends Component {
                     </ListGroupItem>
                     <ListGroupItem>
                       <ButtonToolbar>
-                        <Button bsStyle="primary" onClick={() => this.editPost()}>Edit</Button>
+                        <Button bsStyle="primary" onClick={() => this.editPost(post)}>Edit</Button>
                         <Button bsStyle="primary" onClick={() => this.viewDetailPost(post.id, post.category)}>See Details</Button>
                         <Button bsStyle="danger" onClick={() => this.deletePost(post.id)}>Delete</Button>
                       </ButtonToolbar>
                     </ListGroupItem>
                   </ListGroup>
-                  <EditPost post={post} openModal={this.state.editPostModalOpen} closeModal={this.closeEditPostModal}/>
+                  <EditPost post={this.state.selectedPost} openModal={this.state.editPostModalOpen} closeModal={this.closeEditPostModal}/>
                 </Panel>
               )
             })
