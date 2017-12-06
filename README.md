@@ -1,18 +1,19 @@
-Redux Final Project
+## Redux Final Project
 
 This is the final assessment project for Udacity's React & Redux course.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 
-To run the project:
+## To run the project:
   1. Install the requirements from the included package.json file:
     npm install
   2. Run the server with:
         npm start
 
 
-What You're Getting:
+## What You're Getting:
+```bash
 ├── README.md - This file.
 ├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
 ├── public
@@ -35,8 +36,9 @@ What You're Getting:
     ├── App.css
     ├── index.js
     ├── ReadableAPI.js
+```
 
-Backend Server:
+## Backend Server:
   1. Download or fork and clone the starter server repository:    
       https://github.com/udacity/reactnd-project-readable-starter
   2. Install the requirements from the included package.json file:
