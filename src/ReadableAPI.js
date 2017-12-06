@@ -43,7 +43,6 @@ export const getAllPosts = (byCategory, sortType) =>
               return post;
             });
       });
-
       return Promise.all(allPost);
     });
 

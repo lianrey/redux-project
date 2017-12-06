@@ -10,7 +10,7 @@ import Modal from 'react-modal';
 import AddComment from './AddComment';
 import EditComment from './EditComment';
 import EditPost from './EditPost';
-import { deletePostRedux, deleteCommentRedux, updateVotesRedux, updateCommentVotesRedux, editCommentRedux, editPostRedux} from '../actions';
+import { deletePostRedux, deleteCommentRedux, updateVotesRedux, updateCommentVotesRedux, editCommentRedux, editPostRedux, fetchPostsWithRedux} from '../actions';
 
 class PostDetail extends Component{
   state = {
@@ -19,6 +19,11 @@ class PostDetail extends Component{
     selectedComment: {},
     editPostModalOpen: false
   }
+
+  componentDidMount(){
+    this.props.fetchPostsWithRedux(this.props.category, 'vote');
+  }
+
   openCommentModal = () => {
     this.setState(() => ({
       addCommentModalOpen: true
@@ -89,12 +94,12 @@ class PostDetail extends Component{
 
   render(){
     const { addCommentModalOpen, editCommentModalOpen } = this.state;
-    const { posts, postId } = this.props;
-    const selectedPost = posts ? posts.filter(p => { return p.id === postId }) : [];
-
-    return(
-      <div>
-      { selectedPost.map((post) => (
+    const { posts } = this.props;
+    let post = posts.filter(p => p.id === this.props.postId);
+    if(post.length > 0){
+      post = post[0];
+      return(
+        <div>
           <Panel key={post.id} header={post.title} bsStyle="primary">
             <p>{post.body}</p>
             <p>Votes: {post.voteScore}</p>
@@ -162,10 +167,12 @@ class PostDetail extends Component{
             </Modal>
             <EditPost post={post} openModal={this.state.editPostModalOpen} closeModal={this.closeEditPostModal}/>
           </Panel>
-        ))
-      }
-      </div>
-    )
+        </div>
+      )
+    }
+    else{
+      return(<div>This post is not valid or has been removed</div>);
+    }
   }
 }
 
@@ -183,7 +190,8 @@ const mapDispatchToProps = (dispatch) => {
     updateVotesRedux: (id, type) => dispatch(updateVotesRedux(id, type)),
     deleteCommentRedux: (postId, commentId) => dispatch(deleteCommentRedux(postId, commentId)),
     editCommentRedux: (comment) => dispatch(editCommentRedux(comment)),
-    editPostRedux: (post) => dispatch(editPostRedux(post))
+    editPostRedux: (post) => dispatch(editPostRedux(post)),
+    fetchPostsWithRedux: (byCategory, sortType) => dispatch(fetchPostsWithRedux(byCategory, sortType))
   }
 }
 

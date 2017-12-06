@@ -32,7 +32,8 @@ class App extends Component {
           }} />
           <Route exact path="/:category/:id" render={({ match }) => {
             const { id } = match.params;
-            return <PostDetail postId={id} />
+            const { category } = match.params;
+            return <PostDetail postId={id} category={category} />
           }} />
           <Route exact path="/posts/new" component={AddPost} />
         </div>

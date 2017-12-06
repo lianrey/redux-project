@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS, ADD_POST, DELETE_POST, UPDATE_VOTES, DELETE_COMMENT, ADD_COMMENT, UPDATE_COMMENT_VOTES, EDIT_POST } from '../actions';
+import { GET_POSTS, GET_CATEGORIES, GET_SELECTIONS, ADD_POST, DELETE_POST, UPDATE_VOTES, DELETE_COMMENT, ADD_COMMENT, UPDATE_COMMENT_VOTES, EDIT_POST, GET_POST } from '../actions';
 
 function posts(state = [], action) {
   const { posts, postId, voteType, commentId, comment, post } = action
@@ -74,6 +74,17 @@ function posts(state = [], action) {
   }
 }
 
+function post(state = {}, action){
+  const { post } = action
+
+  switch(action.type) {
+    case GET_POST:
+      return post;
+    default:
+      return state;
+  }
+}
+
 function categories(state = [], action) {
   const { categories } = action
 
@@ -104,5 +115,6 @@ function selection(state = initSelection, action) {
 export default combineReducers({
   posts,
   categories,
-  selection
+  selection,
+  post
 })
