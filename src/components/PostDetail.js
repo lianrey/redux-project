@@ -171,7 +171,7 @@ class PostDetail extends Component{
       )
     }
     else{
-      return(<div>This post is not valid or has been removed</div>);
+      return(<div>This post is not valid or has been removed.</div>);
     }
   }
 }

@@ -10,7 +10,7 @@ import uuid from 'uuid';
 class AddPost extends Component{
   handleSubmit = (e) => {
 			e.preventDefault()
-			const values = serializerForm(e.target, {hash: true})
+			const values = serializerForm(e.target, {hash: true});
       const title = values.title;
       const author = values.author;
       const body = values.body;
@@ -36,7 +36,6 @@ class AddPost extends Component{
 
   render(){
     const { categories } = this.props;
-
     return (
       <Grid>
         <Row className="show-grid">
@@ -45,11 +44,11 @@ class AddPost extends Component{
               <form onSubmit={this.handleSubmit}>
                 <FormGroup>
                   <label>Title</label>
-                  <FormControl type="text" name="title" />
+                  <FormControl type="text" name="title" required />
                 </FormGroup>
                 <FormGroup>
                   <label>Author</label>
-                  <FormControl type="text" name="author" />
+                  <FormControl type="text" name="author" required />
                 </FormGroup>
                 <FormGroup controlId="formControlsSelect">
                  <ControlLabel>Select category</ControlLabel>
@@ -65,7 +64,7 @@ class AddPost extends Component{
                </FormGroup>
                <FormGroup controlId="formControlsTextarea">
                  <ControlLabel>Post:</ControlLabel>
-                 <FormControl componentClass="textarea" name="body"/>
+                 <FormControl componentClass="textarea" name="body" required/>
                </FormGroup>
 
                 <Button type="submit">

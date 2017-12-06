@@ -39,11 +39,11 @@ class AddComment extends Component{
               <form onSubmit={this.handleSubmit}>
                 <FormGroup>
                   <label>Author</label>
-                  <FormControl type="text" name="author" />
+                  <FormControl type="text" name="author" required/>
                 </FormGroup>
                 <FormGroup controlId="formControlsTextarea">
                   <ControlLabel>Comment:</ControlLabel>
-                  <FormControl componentClass="textarea" name="body"/>
+                  <FormControl componentClass="textarea" name="body" required/>
                 </FormGroup>
 
                 <Button type="submit">
