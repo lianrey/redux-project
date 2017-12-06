@@ -38,7 +38,7 @@ class EditPost extends Component{
                   </FormGroup>
                   <FormGroup controlId="formControlsTextarea">
                     <ControlLabel>Body:</ControlLabel>
-                    <FormControl componentClass="textarea" name="body" defaultValue={post.body} />
+                    <FormControl componentClass="textarea" name="body" defaultValue={post.body} required />
                   </FormGroup>
 
                   <Button type="submit">

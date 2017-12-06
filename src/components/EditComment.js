@@ -32,7 +32,7 @@ class EditComment extends Component{
                 </FormGroup>
                 <FormGroup controlId="formControlsTextarea">
                   <ControlLabel>Comment:</ControlLabel>
-                  <FormControl componentClass="textarea" name="body" defaultValue={comment.body} />
+                  <FormControl componentClass="textarea" name="body" defaultValue={comment.body} required />
                 </FormGroup>
 
                 <Button type="submit">
